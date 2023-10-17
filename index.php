@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Pessoas</title>
-</head>
-<body style="background-color: LightBlue; align-items: center; display: flex; justify-content: center;">
-    
-    <?php
+<?php
+
         $conexao= mysqli_connect('localhost','root','','HORUS_TREINO');
 
         mysqli_select_db($conexao,'HORUS_TREINO');
@@ -19,67 +11,25 @@
 
         }
 
-
         $query_list="SELECT * FROM Pessoa ORDER BY Id";
 
         $list_pessoas=mysqli_query($conexao,$query_list);
 
-        print "<table style='background-color: white; border-radius: 10px; padding: 3px;'>";
-        print "<thead style='background-color: white; justify-content: center; align-items: center;'>";
-        print "<tr>";
-        print "<th style='padding: 15px;'></th>";
-        print "<th style='padding: 15px;'></th>";
-        print "<th> ID </th>";
-        print "<th> Nome </th>";
-        print "<th> Telefone </th>";
-        print "<th> E-mail </th>";
-        print "<th> Endereço </th>";
-        print "<th> Bairro </th>";
-        print "<tr>";
-        print "</thead>";
-        print "<tbody>";
+        $items='';
 
-        while ($linha= mysqli_fetch_array($list_pessoas)){
-            $id=$linha['Id'];
-            $nome=$linha['Nome'];
-            $telefone=$linha['Telefone'];
-            $email=$linha['Email'];
-            $endereco=$linha['Endereco'];
-            $bairro=$linha['Bairro'];
-
-        print "<tr>";
-
-        print "<td align='center'>
-            <a href='pessoa_form_insert.php?action=edit&id={$id}'>
-            <img src='.\components\image_edit.png' style='width:25px'>
-            </a></td>";
-        
-        print "<td align='center'>
-            <a href='index.php?action=delete&id={$id}'>
-            <img src='.\components\image_remove.png' style='width:25px'>
-            </a></td>";
-
-        print "<td>{$id}</td>";
-        print "<td>{$nome}</td>";
-        print "<td>{$telefone}</td>";
-        print "<td>{$email}</td>";
-        print "<td>{$endereco}</td>";
-        print "<td>{$bairro}</td>";
-        
-        print "</tr>";
-
+        while ($linha = mysqli_fetch_assoc($list_pessoas)) {
+            $item = file_get_contents('./html/item.html');
+            $item = str_replace('{id}', $linha['Id'], $item);
+            $item = str_replace('{nome}', $linha['Nome'], $item);
+            $item = str_replace('{telefone}', $linha['Telefone'], $item);
+            $item = str_replace('{email}', $linha['Email'], $item);
+            $item = str_replace('{endereco}', $linha['Endereco'], $item);
+            $item = str_replace('{bairro}', $linha['Bairro'], $item);
+            $items.= $item;
         }
 
-        print "</tbody>";
-        print "</table>";
+        $list = file_get_contents('./html/list.html');
+        $list = str_replace('{items}', $items, $list);
+        print $list;
 
-        print "<a href='pessoa_form_insert.php'><button style='margin: 10px; width: 100px; height: 30px;'>NOVO</button></a>";
-
-        mysqli_close($conexao);
-
-    ?>
-
-</body> 
-</html>
-
-    
+?>

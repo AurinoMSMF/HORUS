@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de cadastro</title>
     <?php
         $id =$nome=$endereco=$email=$bairro=$telefone ='';
         if(!empty($_REQUEST['action'])){
@@ -64,33 +58,24 @@
                         alert('Registro inserido com sucesso!');
                     </script>";
                 mysqli_close($conexao);
+            }
         }
-    }
+        else{
+            $_POST = [];
+            $_POST['id'] = '';
+            $_POST['nome'] = '';
+            $_POST['endereco'] = '';
+            $_POST['bairro'] = '';
+            $_POST['telefone'] = '';
+            $_POST['email'] = '';
+        }
+
+        $form = file_get_contents('html/form.html');
+        $form = str_replace('{id}', $id, $form);
+        $form = str_replace('{nome}', $nome, $form);
+        $form = str_replace('{endereco}', $endereco, $form);
+        $form = str_replace('{bairro}', $bairro, $form);
+        $form = str_replace('{telefone}', $telefone, $form);
+        $form = str_replace('{email}', $email, $form);
+        print $form;
     ?>
-</head>
-<body style="background-color: LightBlue; align-items: center; display: flex; justify-content: center;">
-    
-    <form style="background-color: white; border: none; border-radius: 10px; padding: 10px;" action="pessoa_form_insert.php?action=save" method="post">
-        <input type="hidden" readonly name="id" value="<?=$id?>">
-        <p>Nome:</p>
-        <input placeholder="Nome" type="text" name="nome" value="<?=$nome?>">
-        <br>
-        <p>Telefone:</p>
-        <input placeholder="(XX) 9XXXX-XXXX" type="text" name="telefone" value="<?=$telefone?>">
-        <br>
-        <p>E-mail:</p>
-        <input placeholder="example@email.com" type="text" name="email" value="<?=$email?>">
-        <p>Bairro:</p>
-        <input placeholder="Bairro" type="text" name="bairro" value="<?=$bairro?>">
-        <p>Endereço:</p>
-        <input placeholder="Rua Teste, nº XXX" type="text" name="endereco" value="<?=$endereco?>">
-        <br>
-        <br>
-
-        <input type="submit" value="Enviar">
-        <a href="index.php"><button type="button">Voltar</button></a>
-    </form>
-    <br>
-</body>
-</html>
-
