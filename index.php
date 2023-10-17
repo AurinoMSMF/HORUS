@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Pessoas</title>
 </head>
-<body style="background-color: LightBlue; align-itens: center; display: flex; justify-itens: center; border-radius: 10px;">
-    <a style="margin-left: 500px;" href="pessoa_form_insert.php"><button>NOVO</button></a>
+<body style="background-color: LightBlue; align-items: center; display: flex; justify-content: center;">
+    
     <?php
         $conexao= mysqli_connect('localhost','root','','HORUS_TREINO');
 
@@ -24,11 +24,11 @@
 
         $list_pessoas=mysqli_query($conexao,$query_list);
 
-        print "<table border=1; style='background-color: white;>";
-        print "<thead style='background-color: white;'>";
+        print "<table style='background-color: white; border-radius: 10px; padding: 3px;'>";
+        print "<thead style='background-color: white; justify-content: center; align-items: center;'>";
         print "<tr>";
-        print "<th></th>";
-        print "<th></th>";
+        print "<th style='padding: 15px;'></th>";
+        print "<th style='padding: 15px;'></th>";
         print "<th> ID </th>";
         print "<th> Nome </th>";
         print "<th> Telefone </th>";
@@ -72,6 +72,8 @@
 
         print "</tbody>";
         print "</table>";
+
+        print "<a href='pessoa_form_insert.php'><button style='margin: 10px; width: 100px; height: 30px;'>NOVO</button></a>";
 
         mysqli_close($conexao);
 
