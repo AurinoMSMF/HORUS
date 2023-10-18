@@ -8,8 +8,7 @@
 <body style="background-color: LightBlue; align-items: center; display: flex; justify-content: center;">
     
     <form style="background-color: white; border: none; border-radius: 10px; padding: 10px;" action="pessoa_form_insert.php?action=save" method="post">
-        <p>ID:</p>
-        <input type="text" readonly name="id" value="{id}">
+        <input type="hidden" readonly name="id" value="{id}">
         <p>Nome:</p>
         <input placeholder="Nome" type="text" name="nome" value='{nome}'>
         <br>
