@@ -1,14 +1,17 @@
 <?php
-        require_once('./db/pessoa_db.php');
 
-        if(!empty($_GET['action']) AND $_GET['action']=="delete"){
+        require_once('./classes/Pessoa.php');
+        try{
+            if(!empty($_GET['action']) AND $_GET['action']=="delete"){
+                $id = (int) $_GET['id'];
+                Pessoa::delete($id);
 
-            $id = (int) $_GET['id'];
-
-            exclui_pessoa($id);
+            }
+            $pessoas = Pessoa::all();
         }
-
-        $pessoas=lista_pessoas();
+        catch(Exception $e){
+            print $e->getMessage();
+        }
 
         $items='';
 
