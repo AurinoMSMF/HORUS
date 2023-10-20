@@ -48,6 +48,7 @@
                               ':bairro' => $pessoa['bairro']
             ]);
             
+            return $pessoa['id'];
         }
         
         public static function find($id){

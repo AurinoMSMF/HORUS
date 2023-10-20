@@ -7,8 +7,9 @@
 </head>
 <body style="background-color: LightBlue; align-items: center; display: flex; justify-content: center;">
     
-    <form style="background-color: white; border: none; border-radius: 10px; padding: 10px;" action="pessoa_form_insert.php?action=save" method="post">
-        <input type="hidden" readonly name="id" value="{id}">
+    <form style="background-color: white; border: none; border-radius: 10px; padding: 10px;" action="index.php?class=PessoaForm&method=save" method="post">
+        <p>ID:</p>
+        <input type="text" readonly=1 name="id" value="{id}">
         <p>Nome:</p>
         <input placeholder="Nome" type="text" name="nome" value='{nome}'>
         <br>
@@ -25,7 +26,7 @@
         <br>
 
         <input type="submit" value="Enviar">
-        <a href="index.php"><button type="button">Voltar</button></a>
+        <a href="index.php?class=PessoaList"><button type="button">Voltar</button></a>
     </form>
     <br>
 </body>

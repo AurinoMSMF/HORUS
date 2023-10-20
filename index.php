@@ -1,35 +1,26 @@
 <?php
-
-        require_once('./classes/Pessoa.php');
-        try{
-            if(!empty($_GET['action']) AND $_GET['action']=="delete"){
-                $id = (int) $_GET['id'];
-                Pessoa::delete($id);
-
+        //header('Location: index.php?class=PessoaList');
+        spl_autoload_register(function($class){
+            if(file_exists($class.'.php')){
+                require_once($class.'.php');
             }
-            $pessoas = Pessoa::all();
-        }
-        catch(Exception $e){
-            print $e->getMessage();
-        }
 
-        $items='';
+        });
 
-        if($pessoas){
-            foreach ($pessoas as $pessoa){
-                $item = file_get_contents('./html/item.html');
-                $item = str_replace('{id}', $pessoa['id'], $item);
-                $item = str_replace('{nome}', $pessoa['nome'], $item);
-                $item = str_replace('{telefone}', $pessoa['telefone'], $item);
-                $item = str_replace('{email}', $pessoa['email'], $item);
-                $item = str_replace('{endereco}', $pessoa['endereco'], $item);
-                $item = str_replace('{bairro}', $pessoa['bairro'], $item);
-                $items.= $item;
+        $classe = $_REQUEST['class'];
+
+        $method = isset($_REQUEST['method']) ? $_REQUEST['method'] : null;
+
+        if(class_exists($classe)){
+            $pagina = new $classe($_REQUEST);
+            if(!empty($method) AND (method_exists($classe,$method))){
+                $pagina->$method($_REQUEST);
             }
+            $pagina->show();
         }
 
-        $list = file_get_contents('./html/list.html');
-        $list = str_replace('{items}', $items, $list);
-        print $list;
+        if(empty($classe) AND empty($method)){
+            header('Location: index.php?class=PessoaList&method=load');
+        }
 
 ?>
